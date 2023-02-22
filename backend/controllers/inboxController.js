@@ -6,7 +6,18 @@ const query = util.promisify(pool.query).bind(pool);
 
 class InboxController{
     static async createItem(req,res){
-        res.send("You are creating Items");
+        const item = req.body.item;
+        const created_at = moment().format('YYYY-MM-DD HH:mm:ss');
+
+        if(!item) return res.status(400).res.json({message:"Item is required."});
+        try{
+            await query('INSERT INTO inbox (item,created_at,user_id) VALUES(?,?,?)',[item,created_at,req.user.userId]);
+            res.status(201).json({message:"Item created successfully!"});
+        } catch (err){
+            console.log(err.message);
+            res.status(500).json({message:"Server error!"})
+
+        }
     }
 
     static async getItem(req,res){

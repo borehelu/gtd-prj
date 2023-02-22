@@ -16,6 +16,7 @@ const verifyToken =  (token,secret=process.env.REFRESH_TOKEN_SECRET)=>{
     }
     catch (e){
         console.log(e.message)
+        throw new Error(e);
     }
 
 }
