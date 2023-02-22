@@ -9,7 +9,7 @@ const verifyJWT = (req,res,next)=>{
     try{
         const decoded = verifyToken(token,process.env.ACCESS_TOKEN_SECRET);
         if(decoded?.email){
-            req.email = decoded.email;
+            req.user = decoded;
             next();
         }
     }catch (err){

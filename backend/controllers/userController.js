@@ -37,8 +37,8 @@ class UserController {
       if(row.length > 0){
         let match =  await comparePassword(password,row[0].password);
         if(match){
-          let accessToken = getAccessToken({email:row[0].email});
-          let refreshToken = getRefreshToken({email:row[0].email});
+          let accessToken = getAccessToken({email:row[0].email,userId:row[0].id});
+          let refreshToken = getRefreshToken({email:row[0].email,userId:row[0].id});
 
           await query('UPDATE users SET refresh_token = ? WHERE email = ?',[refreshToken,row[0].email]);
           res.cookie('jwt', refreshToken, { httpOnly: true , maxAge: 24*60*60*1000});
@@ -63,7 +63,7 @@ class UserController {
       const result = await query('SELECT * FROM users WHERE refresh_token = ?',[jwt]);
       const decoded = verifyToken(result[0].refresh_token);
       if(decoded?.email !== result[0].email) return res.status(403).json({message:"Error verifying token"});
-      let accessToken = getAccessToken({email:result[0].email});
+      let accessToken = getAccessToken({email:result[0].email,userId:result[0].id});
       return res.status(200).json({accessToken});
     }else{
       res.status(401);
