@@ -49,9 +49,11 @@ class InboxController{
 
     static async deleteItem(req,res){
         const itemId = req.params.id;
-        if(!itemId) return res.status(404).json({message:"Item not found!"});
+        if(!itemId) return res.status(400).json({message:"Id is required!"});
 
         try{
+            const row = await query('SELECT * FROM inbox WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
+            if(row.length === 0) return res.status(404).json({message:"Item not found!"});
             await query('DELETE FROM inbox WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
             res.status(200).json({message:"Item deleted."})
         } catch (err){
