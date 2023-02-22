@@ -33,7 +33,13 @@ class InboxController{
     }
 
     static async getItems(req,res){
-        
+        try {
+            const items = await query('SELECT * FROM inbox WHERE user_id = ?',[req.user.userId]);
+            res.status(200).json(items);
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({message:"Server error!"});
+        }
 
     }
 
