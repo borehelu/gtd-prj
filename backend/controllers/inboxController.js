@@ -16,16 +16,25 @@ class InboxController{
         } catch (err){
             console.log(err.message);
             res.status(500).json({message:"Server error!"})
-
         }
     }
 
     static async getItem(req,res){
-        res.send("You are getting an item");
+        const itemId = req.params.id;
+        
+        if(!itemId) return res.status(404).res.json({message:"Item not found!"})
+        try{
+            const [item] = await query('SELECT * FROM inbox WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
+            res.status(200).json(item);
+        } catch (err){
+            console.log(err);
+            res.status(500).json({message:"Server error!"});
+        }
     }
 
     static async getItems(req,res){
-        res.send("You are getting Items");
+        
+
     }
 
     static async updateItem(req,res){
