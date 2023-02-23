@@ -24,7 +24,8 @@ class InboxController{
         
         if(!itemId) return res.status(404).json({message:"Item not found!"})
         try{
-            const [item] = await query('SELECT * FROM inbox WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
+            const item = await query('SELECT * FROM inbox WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
+            if(item.length === 0)
             res.status(200).json(item);
         } catch (err){
             console.log(err);
