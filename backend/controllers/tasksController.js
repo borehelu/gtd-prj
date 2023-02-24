@@ -69,9 +69,9 @@ class TasksController{
         if(!itemId) return res.status(400).json({message:"Id is required!"});
 
         try{
-            const row = await query('SELECT * FROM projects WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
+            const row = await query('SELECT * FROM tasks WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
             if(row.length === 0) return res.status(404).json({message:"Item not found!"});
-            await query('DELETE FROM projects WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
+            await query('DELETE FROM tasks WHERE id = ? AND user_id = ?',[itemId,req.user.userId]);
             res.status(200).json({message:"Item deleted."})
         } catch (err){
             console.log(err)
