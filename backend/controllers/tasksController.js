@@ -47,7 +47,7 @@ class TasksController{
 
     static async updateItem(req,res){
         const itemId = req.params.id;
-        const {name,description,due_date,priority,status,notes} = req.body;
+        const {project_id,name,description,due_date,priority,status,notes} = req.body;
 
         if(!itemId) return res.status(400).json({message:"Id is required!"});
 
@@ -55,7 +55,7 @@ class TasksController{
             const row = await query('SELECT * FROM projects WHERE id = ?',[itemId]);
             if(row.length === 0) return res.status(404).json({message:"Item not found!"});
             if(row[0].user_id !== req.user.userId) return res.status(403).json({message:"You are not authorized to update this resource!"})
-            await query('UPDATE projects SET name=?,description=?,due_date=?,priority=?,status=?,notes=? WHERE id = ? AND user_id = ?',[name,description,due_date,priority,status,notes,itemId,req.user.userId]);
+            await query('UPDATE tasks SET project_id=?,name=?,description=?,due_date=?,priority=?,status=?,notes=? WHERE id = ? AND user_id = ?',[project_id,name,description,due_date,priority,status,notes,itemId,req.user.userId]);
             res.status(200).json({message:"Item updated!"})
         } catch (err) {
             console.log(err)
