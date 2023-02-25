@@ -1,8 +1,10 @@
-const { body, validationResult } = require('express-validator');
+const { body, validationResult } = require("express-validator");
 
 const validateSignup = [
-  body('email').isEmail().withMessage('Invalid email address').normalizeEmail(),
-  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+  body("email").isEmail().withMessage("Invalid email address").normalizeEmail(),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
 ];
 
 const signupValidationResult = (req, res, next) => {
