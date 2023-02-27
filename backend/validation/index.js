@@ -8,6 +8,7 @@ const {
   createProjectTasks,
   createReference,
   createWaitingFor,
+  createSomeday,
 } = require("./rules");
 
 const validationFetch = (validationName) => {
@@ -21,6 +22,7 @@ const validationFetch = (validationName) => {
     createProjectTasks,
     createReference,
     createWaitingFor,
+    createSomeday,
   };
 
   return rules[validationName];
