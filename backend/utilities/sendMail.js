@@ -1,16 +1,16 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
-    }
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
 });
 
-const template = (token)=> {
-    return `
+const template = (token) => {
+  return `
             <!DOCTYPE html>
             <html>
             <head>
@@ -41,22 +41,22 @@ const template = (token)=> {
                 </div>
             </body>
             </html>
-`
-        };
+`;
+};
 
-const  sendMail = async (recipient,token,callback)=>{
-const options = {
+const sendMail = async (recipient, token, callback) => {
+  const options = {
     from: process.env.EMAIL_USER,
-    to: recipient, 
+    to: recipient,
     subject: "Reset Password",
     html: template(token),
-};
- try {
+  };
+  try {
     const info = await transporter.sendMail(options);
     callback(info);
   } catch (error) {
     console.log(error);
-  } 
-}
+  }
+};
 
 module.exports = sendMail;
