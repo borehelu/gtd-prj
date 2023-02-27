@@ -1,28 +1,24 @@
-const pool = require("../database/connection");
 const moment = require("moment");
-const util = require("util");
-
-const query = util.promisify(pool.query).bind(pool);
+const { createItem, updateItem, deleteItem, getItem } = require("../database");
 
 class ProjectsController {
-  static async createItem(req, res) {
-    const { name, description, due_date, priority, status, notes } = req.body;
+  static async createProject(req, res) {
+    const { project_name, description, outcome, due_date, priority, status } =
+      req.body;
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
-
+    const project = {
+      project_name,
+      description,
+      outcome,
+      due_date,
+      priority,
+      status,
+      created_at,
+      user_id: req.user.userId,
+    };
     try {
-      await query(
-        "INSERT INTO projects (name,description,due_date,priority,status,notes,created_at,user_id) VALUES(?,?,?,?,?,?,?,?)",
-        [
-          name,
-          description,
-          due_date,
-          priority,
-          status,
-          notes,
-          created_at,
-          req.user.userId,
-        ]
-      );
+      const { error, result } = await createItem("projects", project);
+      if (error) throw new Error(error);
       res.status(201).json({ message: "Item created successfully!" });
     } catch (err) {
       console.log(err.message);
@@ -30,64 +26,68 @@ class ProjectsController {
     }
   }
 
-  static async getItem(req, res) {
+  static async getProject(req, res) {
     const itemId = req.params.id;
 
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
     try {
-      const item = await query(
-        "SELECT * FROM projects WHERE id = ? AND user_id = ?",
-        [itemId, req.user.userId]
-      );
-      if (item.length === 0)
+      const { error, result } = await getItem("projects", {
+        user_id: req.user.userId,
+        id: itemId,
+      });
+      if (error) throw new Error(error);
+      if (result.length === 0)
         return res.status(404).json({ message: "Project not found!" });
-
-      res.status(200).json(item);
+      res.status(200).json(result[0]);
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error!" });
     }
   }
 
-  static async getItems(req, res) {
+  static async getProjects(req, res) {
     try {
-      const items = await query("SELECT * FROM projects WHERE user_id = ?", [
-        req.user.userId,
-      ]);
-      res.status(200).json(items);
+      const { error, result } = await getItem("projects", {
+        user_id: req.user.userId,
+      });
+      if (error) throw new Error(error);
+      res.status(200).json(result);
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error!" });
     }
   }
 
-  static async updateItem(req, res) {
+  static async updateProject(req, res) {
     const itemId = req.params.id;
-    const { name, description, due_date, priority, status, notes } = req.body;
+    const { project_name, description, outcome, due_date, priority, status } =
+      req.body;
+    const project = {
+      project_name,
+      description,
+      outcome,
+      due_date,
+      priority,
+      status,
+    };
 
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
     try {
-      const row = await query("SELECT * FROM projects WHERE id = ?", [itemId]);
-      if (row.length === 0)
+      const { error, result } = await getItem("projects", { id: itemId });
+      if (error) throw new Error(error);
+      if (result.length === 0)
         return res.status(404).json({ message: "Item not found!" });
-      if (row[0].user_id !== req.user.userId)
+      if (result[0].user_id !== req.user.userId)
         return res
           .status(403)
           .json({ message: "You are not authorized to update this resource!" });
-      await query(
-        "UPDATE projects SET name=?,description=?,due_date=?,priority=?,status=?,notes=? WHERE id = ? AND user_id = ?",
-        [
-          name,
-          description,
-          due_date,
-          priority,
-          status,
-          notes,
-          itemId,
-          req.user.userId,
-        ]
+      const { error: e, result: r } = await updateItem(
+        "projects",
+        { id: itemId },
+        project
       );
+      if (e) throw new Error(e);
       res.status(200).json({ message: "Item updated!" });
     } catch (err) {
       console.log(err);
@@ -95,23 +95,21 @@ class ProjectsController {
     }
   }
 
-  static async deleteItem(req, res) {
+  static async deleteProject(req, res) {
     const itemId = req.params.id;
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
     try {
-      const row = await query(
-        "SELECT * FROM projects WHERE id = ? AND user_id = ?",
-        [itemId, req.user.userId]
-      );
-      if (row.length === 0)
+      const { error, result } = await getItem("projects", {
+        id: itemId,
+        user_id: req.user.userId,
+      });
+      if (error) throw new Error(error);
+      if (result.length === 0)
         return res.status(404).json({ message: "Item not found!" });
-      await query("DELETE FROM projects WHERE id = ? AND user_id = ?", [
-        itemId,
-        req.user.userId,
-      ]);
+      await deleteItem("projects", itemId);
       res.status(200).json({ message: "Item deleted." });
-    } catch (err) {-
+    } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error!" });
     }
