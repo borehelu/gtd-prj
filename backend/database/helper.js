@@ -21,23 +21,32 @@ const createItem = async (table, data) => {
   const keys = Object.keys(data).map((val) => `${val}`);
   const query_str = `INSERT INTO ${table} (${keys.toString()}) VALUES (?);`;
 
-  
   try {
     await query(query_str, [values]);
     return { error: null, result: "Item inserted" };
   } catch (error) {
-	console.log(error);
+    console.log(error);
     return { error: error.sqlMessage, result: null };
   }
 };
 
-const updateItem = async (table, id, data) => {
+const updateItem = async (table, option, data) => {
   const values = Object.values(data);
-  const columns = Object.keys(data).map((key) => `${key}=?`).join(',');
+  const c_values = Object.values(option);
+  const columns = Object.keys(data)
+    .map((key) => `${key}=?`)
+    .join(",");
+  const keys = Object.keys(option);
+  let whereClause = "";
+  if (keys.length === 1) {
+    whereClause = keys.map((key) => `${key} = ?`);
+  } else {
+    whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
+  }
+  const query_str = `UPDATE ${table} SET ${columns} WHERE ${whereClause} `;
 
-  const query_str = `UPDATE ${table} SET ${columns} WHERE id=? `;
   try {
-    await query(query_str,[values,id]);
+    const result = await query(query_str, [...values, ...c_values]);
     return { error: null, result: "Item updated" };
   } catch (error) {
     return { error: error.sqlMessage };
@@ -45,13 +54,10 @@ const updateItem = async (table, id, data) => {
 };
 
 const deleteItem = async (table, id) => {
-  const query_str = {
-    text: `DELETE FROM ${table} WHERE id=$1 `,
-    values: [id],
-  };
+  const query_str = `DELETE FROM ${table} WHERE id=? `;
   try {
-    const { rowCount } = await pool.query_str(query_str);
-    return { error: null, result: rowCount };
+    await query(query_str, id);
+    return { error: null, result: "Item deleted" };
   } catch (error) {
     return { error: error.message };
   }
@@ -59,28 +65,17 @@ const deleteItem = async (table, id) => {
 
 const getItem = async (table, option) => {
   const value = Object.values(option);
-  const key = Object.keys(option)[0];
-  const query_str = `SELECT * FROM ${table} WHERE ${key}=?`;
+  const keys = Object.keys(option);
+  let whereClause = "";
+  if (keys.length === 1) {
+    whereClause = keys.map((key) => `${key} = ?`);
+  } else {
+    whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
+  }
+  const query_str = `SELECT * FROM ${table} WHERE ${whereClause}`;
 
   try {
     const rows = await query(query_str, value);
-    return { error: null, result: rows };
-  } catch (error) {
-    return { error: error.message };
-  }
-};
-
-const getItems = async (table, condition = null) => {
-  const value = condition ? Object.values(condition) : null;
-  const key = condition ? Object.keys(condition).toString() : null;
-  const query_str = !condition
-    ? { text: `SELECT * FROM ${table}` }
-    : {
-        text: `SELECT * FROM ${table} WHERE "${key}"=$1 `,
-        values: value,
-      };
-  try {
-    const { rows } = await pool.query(query_str);
     return { error: null, result: rows };
   } catch (error) {
     return { error: error.message };
@@ -91,6 +86,5 @@ module.exports = {
   createItem,
   updateItem,
   getItem,
-  getItems,
   deleteItem,
 };

@@ -1,35 +1,15 @@
 const express = require("express");
-const {
-  createItem,
-  getItem,
-  getItems,
-  updateItem,
-  deleteItem,
-} = require("../../controllers/projectsController");
-const verifyJWT = require("../../middlewares/authenticate");
-const {
-  validateProject,
-  projectValidationResult,
-} = require("../../validation/validateProject");
+const { verifyJWT, validate } = require("../../middlewares");
+const ProjectsController = require("../../controllers/projectsController");
 
 const router = express.Router();
+const { createItem, getItem, getItems, updateItem, deleteItem } =
+  ProjectsController;
 
-router.post(
-  "/",
-  verifyJWT,
-  validateProject,
-  projectValidationResult,
-  createItem
-);
+router.post("/", verifyJWT, validate("createProjects"), createItem);
 router.get("/:id", verifyJWT, getItem);
 router.get("/", verifyJWT, getItems);
-router.put(
-  "/:id",
-  verifyJWT,
-  validateProject,
-  projectValidationResult,
-  updateItem
-);
+router.put("/:id", verifyJWT, validate("createProjects"), updateItem);
 router.delete("/:id", verifyJWT, deleteItem);
 
 module.exports = router;

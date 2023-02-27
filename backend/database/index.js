@@ -1,15 +1,8 @@
-const {
-  createItem,
-  updateItem,
-  getItem,
-  getItems,
-  deleteItem,
-} = require("./helper");
+const { createItem, updateItem, getItem, deleteItem } = require("./helper");
 
 module.exports = {
   createItem,
   updateItem,
   getItem,
-  getItems,
   deleteItem,
 };

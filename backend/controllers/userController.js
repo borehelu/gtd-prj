@@ -3,7 +3,6 @@ const {
   updateItem,
   deleteItem,
   getItem,
-  getItems,
 } = require("../database");
 
 const {
@@ -67,7 +66,9 @@ class UserController {
 
           const { error: e, result: r } = await updateItem(
             "users",
-            result[0].id,
+            {
+              id: result[0].id,
+            },
             {
               refresh_token: refreshToken,
             }
@@ -114,7 +115,9 @@ class UserController {
         });
         const { error: e, result: r } = await updateItem(
           "users",
-          result[0].id,
+          {
+            id: result[0].id,
+          },
           {
             refresh_token: refreshToken,
           }
@@ -144,9 +147,13 @@ class UserController {
         return res.sendStatus(204);
       }
 
-      const { error: e, result: r } = await updateItem("users", result[0].id, {
-        refresh_token: "NULL",
-      });
+      const { error: e, result: r } = await updateItem(
+        "users",
+        { id: result[0].id },
+        {
+          refresh_token: "NULL",
+        }
+      );
       if (e) return res.sendStatus(500);
       res.clearCookie("jwt", { httpOnly: true });
       res.sendStatus(204);
@@ -165,7 +172,7 @@ class UserController {
       if (result.length === 0)
         return res.status(401).json({ message: "Account not found!" });
       const token = getAccessToken({ email });
-      await updateItem("users", result[0].id, { auth_token: token });
+      await updateItem("users", { id: result[0].id }, { auth_token: token });
       sendMail(email, token, (info) => {
         console.log("Email sent successfully");
         res.status(200).json({ message: "Email was sent successfully!" });
@@ -181,7 +188,7 @@ class UserController {
     const token = authorization.split(" ")[1];
     const hashedPassword = await hashPassword(password);
     try {
-      const {error,result} = await getItem("users", { auth_token: token });
+      const { error, result } = await getItem("users", { auth_token: token });
       if (result.length === 0)
         return res.status(401).json({ message: "Error setting password!" });
 
@@ -189,7 +196,11 @@ class UserController {
       if (decoded.email !== user[0].email)
         return res.status(401).json({ message: "Error setting password!" });
 
-      await updateItem('users',result[0].id,{password:hashedPassword});
+      await updateItem(
+        "users",
+        { id: result[0].id },
+        { password: hashedPassword }
+      );
       return res.status(200).json({ message: "Password updated successfully" });
     } catch (err) {
       console.log(err);
