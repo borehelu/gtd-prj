@@ -1,21 +1,19 @@
-const pool = require("../database/connection");
 const moment = require("moment");
-const util = require("util");
+const { createItem, updateItem, deleteItem, getItem } = require("../database");
 
-const query = util.promisify(pool.query).bind(pool);
 
 class InboxController {
-  static async createItem(req, res) {
-    const item = req.body.item;
+  static async createInbox(req, res) {
+    const { item } = req.body;
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
 
-    if (!item) return res.status(400).json({ message: "Item is required." });
     try {
-      await query("INSERT INTO inbox (item,created_at,user_id) VALUES(?,?,?)", [
+      const { error, result } = await createItem("inbox", {
         item,
         created_at,
-        req.user.userId,
-      ]);
+        user_id: req.user.userId,
+      });
+      if (error) throw new Error(error);
       res.status(201).json({ message: "Item created successfully!" });
     } catch (err) {
       console.log(err.message);
@@ -23,27 +21,30 @@ class InboxController {
     }
   }
 
-  static async getItem(req, res) {
+  static async getInbox(req, res) {
     const itemId = req.params.id;
 
     if (!itemId) return res.status(404).json({ message: "Item not found!" });
     try {
-      const item = await query(
-        "SELECT * FROM inbox WHERE id = ? AND user_id = ?",
-        [itemId, req.user.userId]
-      );
-      if (item.length === 0) res.status(200).json(item);
+      const { error, result: item } = await getItem("inbox", {
+        user_id: req.user.userId,
+        id: itemId,
+      });
+      if (error) throw new Error(error);
+      if (item.length !== 0) return res.status(200).json(item);
+      return res.status(404).json({ message: "Item not found!" });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error!" });
     }
   }
 
-  static async getItems(req, res) {
+  static async getAllInbox(req, res) {
     try {
-      const items = await query("SELECT * FROM inbox WHERE user_id = ?", [
-        req.user.userId,
-      ]);
+      const { error, result: items } = await getItem("inbox", {
+        user_id: req.user.userId,
+      });
+      if (error) throw new Error(error);
       res.status(200).json(items);
     } catch (err) {
       console.log(err);
@@ -51,25 +52,22 @@ class InboxController {
     }
   }
 
-  static async updateItem(req, res) {
+  static async updateInbox(req, res) {
     const itemId = req.params.id;
-    const item = req.body.item;
-    if (!itemId || !item)
-      return res.status(400).json({ message: "Id is required!" });
+    const {item} = req.body;
+
+    if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
     try {
-      const row = await query("SELECT * FROM inbox WHERE id = ?", [itemId]);
+      const {error, result:row} = await getItem('inbox',{id:itemId});
+      if(error) throw new Error(error)
       if (row.length === 0)
         return res.status(404).json({ message: "Item not found!" });
       if (row[0].user_id !== req.user.userId)
         return res
           .status(403)
           .json({ message: "You are not authorized to update this resource!" });
-      await query("UPDATE inbox SET item = ? WHERE id = ? AND user_id = ?", [
-        item,
-        itemId,
-        req.user.userId,
-      ]);
+      await updateItem('inbox',{id:itemId},{item});
       res.status(200).json({ message: "Item updated!" });
     } catch (err) {
       console.log(err);
@@ -77,21 +75,16 @@ class InboxController {
     }
   }
 
-  static async deleteItem(req, res) {
+  static async deleteInbox(req, res) {
     const itemId = req.params.id;
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
     try {
-      const row = await query(
-        "SELECT * FROM inbox WHERE id = ? AND user_id = ?",
-        [itemId, req.user.userId]
-      );
+      const {error, result:row} = await getItem('inbox',{id:itemId,user_id:req.user.userId});
+      if(error) throw new Error(error);
       if (row.length === 0)
         return res.status(404).json({ message: "Item not found!" });
-      await query("DELETE FROM inbox WHERE id = ? AND user_id = ?", [
-        itemId,
-        req.user.userId,
-      ]);
+      await deleteItem('inbox',itemId);
       res.status(200).json({ message: "Item deleted." });
     } catch (err) {
       console.log(err);
