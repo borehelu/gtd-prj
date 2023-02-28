@@ -9,8 +9,6 @@ POST {{base}}api/v1/auth/sign-in
 Content-Type: application/json
 
 {
-    "first_name":"Bore",
-    "last_name":"Gona",
     "email": "helubore2@gmail.com",
     "password": "123456789"
 }
