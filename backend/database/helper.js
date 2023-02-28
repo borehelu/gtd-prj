@@ -19,7 +19,7 @@ const getColumns = (data) => {
 const createItem = async (table, data) => {
   const values = Object.values(data);
   const keys = Object.keys(data).map((val) => `${val}`);
-  const query_str = `INSERT INTO ${table} (${keys.toString()}) VALUES (?);`;
+  const query_str = `INSERT INTO \`${table}\` (${keys.toString()}) VALUES (?);`;
 
   try {
     await query(query_str, [values]);
@@ -43,7 +43,7 @@ const updateItem = async (table, option, data) => {
   } else {
     whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
   }
-  const query_str = `UPDATE ${table} SET ${columns} WHERE ${whereClause} `;
+  const query_str = `UPDATE \`${table}\` SET ${columns} WHERE ${whereClause} `;
 
   try {
     const result = await query(query_str, [...values, ...c_values]);
@@ -54,7 +54,7 @@ const updateItem = async (table, option, data) => {
 };
 
 const deleteItem = async (table, id) => {
-  const query_str = `DELETE FROM ${table} WHERE id=? `;
+  const query_str = `DELETE FROM \`${table}\` WHERE id=? `;
   try {
     await query(query_str, id);
     return { error: null, result: "Item deleted" };
@@ -72,7 +72,7 @@ const getItem = async (table, option) => {
   } else {
     whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
   }
-  const query_str = `SELECT * FROM ${table} WHERE ${whereClause}`;
+  const query_str = `SELECT * FROM \`${table}\` WHERE ${whereClause}`;
 
   try {
     const rows = await query(query_str, value);

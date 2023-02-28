@@ -32,6 +32,7 @@ const createNextActions = [
   body("status")
     .isIn(["Pending", "In progress", "Complete"])
     .withMessage("Invalid status value."),
+  body("context_id").notEmpty().withMessage("Context is required."),
 ];
 
 const createProjects = [
@@ -56,6 +57,11 @@ const createProjects = [
   body("status")
     .isIn(["Pending", "In progress", "Complete"])
     .withMessage("Invalid status value."),
+  body("due_date")
+    .notEmpty()
+    .withMessage("Due date is required.")
+    .isDate()
+    .withMessage("Invalid due date format."),
 ];
 
 const createProjectTasks = [
@@ -80,18 +86,19 @@ const createProjectTasks = [
   body("status")
     .isIn(["Pending", "In progress", "Complete"])
     .withMessage("Invalid status value."),
+  body("context_id").notEmpty().withMessage("Context is required."),
 ];
 
 const createReference = [
-  body("task_name")
+  body("name")
     .notEmpty()
     .isString()
-    .withMessage("Provide task name")
+    .withMessage("Provide  name")
     .trim(),
   body("description")
     .notEmpty()
     .isString()
-    .withMessage("Provide task description")
+    .withMessage("Provide  description")
     .trim(),
   body("type")
     .isIn(["book", "article", "website"])
@@ -124,17 +131,13 @@ const createWaitingFor = [
 ];
 
 const createSomeday = [
-  body("item_name")
-    .notEmpty()
-    .isString()
-    .withMessage("Provide name")
-    .trim(),
+  body("item_name").notEmpty().isString().withMessage("Provide name").trim(),
   body("description")
     .notEmpty()
     .isString()
     .withMessage("Provide  description")
-    .trim()
-  ]
+    .trim(),
+];
 
 const createUser = [
   body("first_name")
@@ -181,5 +184,5 @@ module.exports = {
   createProjectTasks,
   createReference,
   createWaitingFor,
-  createSomeday
+  createSomeday,
 };
