@@ -123,6 +123,19 @@ const createWaitingFor = [
     .withMessage("Invalid due date format."),
 ];
 
+const createSomeday = [
+  body("item_name")
+    .notEmpty()
+    .isString()
+    .withMessage("Provide name")
+    .trim(),
+  body("description")
+    .notEmpty()
+    .isString()
+    .withMessage("Provide  description")
+    .trim()
+  ]
+
 const createUser = [
   body("first_name")
     .matches(nameRegex)
@@ -168,4 +181,5 @@ module.exports = {
   createProjectTasks,
   createReference,
   createWaitingFor,
+  createSomeday
 };
