@@ -68,7 +68,7 @@ class ReferenceController {
         { name, description, type, path }
       );
       if (e) throw new Error(e);
-      res.status(200).json("Context updated.");
+      res.status(200).json("Reference updated.");
     } catch (err) {
       console.log(err);
       res.status(500).json("Server Error");
