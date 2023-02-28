@@ -60,7 +60,7 @@ class ContextController {
       if (error) throw new Error(error);
       if (result.length === 0) return res.status(404).json("Item not found.");
       const { error: e, result: r } = await updateItem(table, { id }, { name });
-      if (error) throw new Error(error);
+      if (e) throw new Error(e);
       res.status(200).json("Context updated.");
     } catch (err) {
       console.log(err);
@@ -76,11 +76,11 @@ class ContextController {
         id,
         user_id: req.user.userId,
       });
-      if(error) throw new Error(error);
-      if(result.length === 0 ) return res.status(404).json("Item not found.");
-      const {error:e,result:r} = await deleteItem(table,id);
-      if(e) throw new Error(e)
-      res.status(200).json("Item deleted.")
+      if (error) throw new Error(error);
+      if (result.length === 0) return res.status(404).json("Item not found.");
+      const { error: e, result: r } = await deleteItem(table, id);
+      if (e) throw new Error(e);
+      res.status(200).json("Item deleted.");
     } catch (err) {
       console.log(err);
       res.status(500).json("Server Error");
