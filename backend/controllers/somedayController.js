@@ -66,7 +66,7 @@ class SomedayController {
         { item_name, description }
       );
       if (e) throw new Error(e);
-      res.status(200).json("Context updated.");
+      res.status(200).json("Someday updated.");
     } catch (err) {
       console.log(err);
       res.status(500).json("Server Error");
