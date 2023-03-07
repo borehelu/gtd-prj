@@ -13,8 +13,8 @@ const {
 } = UserController;
 
 router.post("/sign-up", validate("createUser"), signUp);
-router.post("/sign-in", validate("loginUser"), signIn);
-router.get("/sign-out", signOut);
+router.post("/login", validate("loginUser"), signIn);
+router.get("/logout", signOut);
 router.get("/reset-token", refreshToken);
 router.post("/send-password-link", sendPasswordResetEmail);
 router.post("/reset-password", resetPassword);
