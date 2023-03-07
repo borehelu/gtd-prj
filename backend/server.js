@@ -6,8 +6,8 @@ const createError = require("http-errors");
 
 const app = express();
 
+app.use(cors({credentials:true}));
 app.use(cookieParser());
-app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
