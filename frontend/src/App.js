@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import PasswordLink from "./pages/PasswordLink";
 import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 import RequireAuth from "./components/RequireAuth";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -15,8 +15,8 @@ function App() {
         {/* auth routes */}
         <Route path="login" element={<Login />} />
         <Route path="sign-up" element={<SignUp />} />
-        <Route path="password-link" element={<PasswordLink />} />
-        <Route path="password-reset" element={<ResetPassword />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
 
         {/* protected routes */}
         <Route element={<RequireAuth />}>
