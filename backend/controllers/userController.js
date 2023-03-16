@@ -37,7 +37,7 @@ class UserController {
       if (result.length > 0)
         return next(createError.Conflict("User already exists"));
 
-      const { error: err, result: user } = await createItem("users", user);
+      const { error: err } = await createItem("users", user);
       if (err) throw new Error(err.message);
       return res.status(201).json({ message: "User created successfully" });
     } catch (err) {
@@ -189,11 +189,12 @@ class UserController {
     const hashedPassword = await hashPassword(password);
     try {
       const { error, result } = await getItem("users", { auth_token: token });
+      if(error) res.sendStatus(500);
       if (result.length === 0)
         return res.status(401).json({ message: "Error setting password!" });
 
       const decoded = verifyToken(token, process.env.ACCESS_TOKEN_SECRET);
-      if (decoded.email !== user[0].email)
+      if (decoded.email !== result[0].email)
         return res.status(401).json({ message: "Error setting password!" });
 
       await updateItem(

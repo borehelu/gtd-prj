@@ -36,7 +36,7 @@ const template = (token) => {
                 <div class="container">
                 <div class="email">
                     <h1>Password Reset</h1>
-                    <p>To reset your password click this <a href='http://localhost:3000/password-reset?token=${token}'>link</a></p>
+                    <p>To reset your password click this <a href='http://localhost:3000/reset-password?token=${token}'>link</a></p>
                 </div>
                 </div>
             </body>

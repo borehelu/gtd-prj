@@ -3,7 +3,8 @@ const { createItem, updateItem, deleteItem, getItem } = require("../database");
 
 class NextActionsController {
   static async createNextAction(req, res) {
-    const { item_name, description, due_date, priority, status } = req.body;
+    const { item_name, description, due_date, priority, status, context_id } =
+      req.body;
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     const next_action = {
       item_name,
@@ -12,6 +13,7 @@ class NextActionsController {
       priority,
       status,
       created_at,
+      context_id,
       user_id: req.user.userId,
     };
     try {
@@ -59,7 +61,8 @@ class NextActionsController {
 
   static async updateNextAction(req, res) {
     const itemId = req.params.id;
-    const { item_name, description, due_date, priority, status } = req.body;
+    const { item_name, description, due_date, priority, status, context_id } =
+      req.body;
 
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
@@ -75,7 +78,7 @@ class NextActionsController {
       await updateItem(
         "next_actions",
         { id: itemId },
-        { item_name, description, due_date, priority, status }
+        { item_name, description, due_date, priority, status, context_id }
       );
       res.status(200).json({ message: "Item updated!" });
     } catch (err) {
