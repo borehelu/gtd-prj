@@ -4,8 +4,9 @@ import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../../utils/axios";
 import FormControl from "../../components/FormControl";
-import { Form, Wrapper, Button } from "./styles";
+import { Form, Wrapper, Button, LeftPanel, RightPanel } from "./styles";
 import toast, { Toaster } from "react-hot-toast";
+import illustration from "../../assets/img/signup.svg";
 
 function SignUp() {
   const { setAuth } = useAuth();
@@ -49,59 +50,68 @@ function SignUp() {
     });
   return (
     <Wrapper>
-      <Toaster />
-      <Form onSubmit={handleSubmit}>
-        <h2>Sign up</h2>
-        <p>Provide your details to create account.</p>
-        <FormControl
-          type="text"
-          id="first_name"
-          label="First Name"
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          touched={touched}
-          errors={errors}
-          values={values}
-        />
+      <main>
+        <Toaster />
+        <LeftPanel>
+          <Form onSubmit={handleSubmit}>
+            <h2>Sign up</h2>
+            <p>Let's get your started in the journey towards productivity.</p>
+            <FormControl
+              type="text"
+              id="first_name"
+              label="First Name"
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              values={values}
+            />
 
-        <FormControl
-          type="text"
-          id="last_name"
-          label="Last Name"
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          touched={touched}
-          errors={errors}
-          values={values}
-        />
+            <FormControl
+              type="text"
+              id="last_name"
+              label="Last Name"
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              values={values}
+            />
 
-        <FormControl
-          type="email"
-          id="email"
-          label="Email"
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          touched={touched}
-          errors={errors}
-          values={values}
-        />
+            <FormControl
+              type="email"
+              id="email"
+              label="Email"
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              values={values}
+            />
 
-        <FormControl
-          type="password"
-          id="password"
-          label="Password"
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          touched={touched}
-          errors={errors}
-          values={values}
-        />
+            <FormControl
+              type="password"
+              id="password"
+              label="Password"
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              values={values}
+            />
 
-        <Button type="submit">Sign up</Button>
-        <p>
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </Form>
+            <Button type="submit">Sign up</Button>
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
+          </Form>
+        </LeftPanel>
+        <RightPanel>
+          <img src={illustration} alt="addf" />
+          <h2>Getting Things Done</h2>
+          <p>Organize your life for maximum engagement.</p>
+        </RightPanel>
+      </main>
     </Wrapper>
   );
 }
