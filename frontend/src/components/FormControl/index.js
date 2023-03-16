@@ -12,23 +12,26 @@ function FormControl({
   label,
 }) {
   return (
-    <InputWrapper>
-      <label htmlFor={id}>{label}</label>
-      <input
-        type={type}
-        name={id}
-        id={id}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values[id]}
-        className={errors[id] && touched[id] ? "error" : ""}
-      />
+    <>
+      <InputWrapper>
+        <input
+          type={type}
+          name={id}
+          id={id}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values[id]}
+          required
+          className={errors[id] && touched[id] ? "error" : ""}
+        />
+        <label htmlFor={id}>{label}</label>
+      </InputWrapper>
       {errors[id] && touched[id] && (
         <small>
           <RiErrorWarningLine /> {errors[id]}
         </small>
       )}
-    </InputWrapper>
+    </>
   );
 }
 
