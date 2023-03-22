@@ -8,10 +8,6 @@ function Layout() {
   const [show, setShow] = useState("");
   const [padding, setPadding] = useState("");
 
-  useEffect(() => {
-    document.querySelector("#body-pd").classList.toggle("body-pd");
-  }, [padding]);
-
   const toggleNavigation = () => {
     setShow((prev) => {
       if (prev === "") return "show";
@@ -33,7 +29,6 @@ function Layout() {
         >
           <IoMenuOutline className="icon" />
         </button>
-
         <div className="profile">
           <p>
             Hello, <span>Helu</span>
@@ -43,7 +38,7 @@ function Layout() {
           </picture>
         </div>
       </header>
-      <SideNav show={show} />
+      <SideNav show={show} setShow={setShow} />
       <Outlet />
     </>
   );
