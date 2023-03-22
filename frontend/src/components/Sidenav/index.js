@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   IoCalendarOutline,
   IoDocumentTextOutline,
@@ -11,9 +11,20 @@ import {
   IoLogoWebComponent,
 } from "react-icons/io5";
 
+import useLogout from "../../hooks/useLogout";
+import { Aside } from "./styles";
+
 function SideNav({ show }) {
+  const navigate = useNavigate();
+  const logout = useLogout();
+
+  const signOut = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
-    <aside className={`sidenav ${show}`} id="sidenav">
+    <Aside className={`sidenav ${show}`} id="sidenav">
       <nav>
         <div className="nav_logo">
           <IoLogoWebComponent className="icon" />
@@ -57,10 +68,10 @@ function SideNav({ show }) {
           </li>
         </ul>
       </nav>
-      <div className="logout">
+      <button className="logout" onClick={signOut}>
         <IoLogOutOutline className="icon" />
-      </div>
-    </aside>
+      </button>
+    </Aside>
   );
 }
 
