@@ -1,20 +1,19 @@
 const moment = require("moment");
 const { createItem, updateItem, deleteItem, getItem } = require("../database");
 
-
 class InboxController {
   static async createInbox(req, res) {
     const { item } = req.body;
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
 
     try {
-      const { error, result } = await createItem("inbox", {
+      const { error, item_id } = await createItem("inbox", {
         item,
         created_at,
         user_id: req.user.userId,
       });
       if (error) throw new Error(error);
-      res.status(201).json({ message: "Item created successfully!" });
+      res.status(201).json({ item_id, message: "Item created successfully!" });
     } catch (err) {
       console.log(err.message);
       res.status(500).json({ message: "Server error!" });
@@ -54,20 +53,20 @@ class InboxController {
 
   static async updateInbox(req, res) {
     const itemId = req.params.id;
-    const {item} = req.body;
+    const { item } = req.body;
 
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
     try {
-      const {error, result:row} = await getItem('inbox',{id:itemId});
-      if(error) throw new Error(error)
+      const { error, result: row } = await getItem("inbox", { id: itemId });
+      if (error) throw new Error(error);
       if (row.length === 0)
         return res.status(404).json({ message: "Item not found!" });
       if (row[0].user_id !== req.user.userId)
         return res
           .status(403)
           .json({ message: "You are not authorized to update this resource!" });
-      await updateItem('inbox',{id:itemId},{item});
+      await updateItem("inbox", { id: itemId }, { item });
       res.status(200).json({ message: "Item updated!" });
     } catch (err) {
       console.log(err);
@@ -80,11 +79,14 @@ class InboxController {
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
     try {
-      const {error, result:row} = await getItem('inbox',{id:itemId,user_id:req.user.userId});
-      if(error) throw new Error(error);
+      const { error, result: row } = await getItem("inbox", {
+        id: itemId,
+        user_id: req.user.userId,
+      });
+      if (error) throw new Error(error);
       if (row.length === 0)
         return res.status(404).json({ message: "Item not found!" });
-      await deleteItem('inbox',itemId);
+      await deleteItem("inbox", itemId);
       res.status(200).json({ message: "Item deleted." });
     } catch (err) {
       console.log(err);
