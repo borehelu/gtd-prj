@@ -5,7 +5,7 @@ function Empty() {
 	return (
 		<Wrapper>
 			<img src={illustration} alt="empty illustration" />
-			<p>No items posted.</p>
+			<p>All clear for now.</p>
 		</Wrapper>
 	);
 }

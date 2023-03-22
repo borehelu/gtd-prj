@@ -11,4 +11,9 @@ export const Wrapper = styled.div`
 	& img {
 		width: 300px;
 	}
+
+	& p {
+		font-size: 1rem;
+		color: #555;
+	}
 `;
