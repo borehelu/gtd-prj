@@ -5,7 +5,7 @@ export const InputWrapper = styled.div`
   position: relative;
   border-radius: 4px;
   background-color: #f7f7f7;
-  margin-top: 1.2rem;
+  margin-top: 1.8rem;
 
   & input {
     width: 100%;
