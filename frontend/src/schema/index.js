@@ -38,6 +38,10 @@ export const passwordResetSchema = yup.object().shape({
     .required("Required"),
 });
 
+export const inboxSchema = yup.object().shape({
+  item: yup.string().required("Required"),
+});
+
 export const newIdeaSchema = yup.object().shape({
   title: yup.string().required("Required"),
   description: yup.string().required("Required"),
