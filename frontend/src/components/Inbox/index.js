@@ -1,21 +1,19 @@
-import React from "react";
 import { InboxWrapper } from "./styles";
-import { IoEllipsisVerticalOutline } from "react-icons/io5";
+import Options from "./Options";
+import { formatDate } from "../../utils/date";
 
-function Inbox({ description, created_at }) {
-	return (
-		<InboxWrapper>
-			<div>
-				<p>{description}</p>
-				<p>
-					<small>{created_at}</small>
-				</p>
-			</div>
-			<button>
-				<IoEllipsisVerticalOutline />
-			</button>
-		</InboxWrapper>
-	);
+function Inbox({ data }) {
+  return (
+    <InboxWrapper>
+      <div>
+        <p>{data.item}</p>
+        <p>
+          <small>{formatDate(data.created_at)}</small>
+        </p>
+      </div>
+      <Options item={data} />
+    </InboxWrapper>
+  );
 }
 
 export default Inbox;
