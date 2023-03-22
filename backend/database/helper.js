@@ -22,8 +22,8 @@ const createItem = async (table, data) => {
   const query_str = `INSERT INTO \`${table}\` (${keys.toString()}) VALUES (?);`;
 
   try {
-    await query(query_str, [values]);
-    return { error: null, result: "Item inserted" };
+    const { insertId } = await query(query_str, [values]);
+    return { error: null, result: "Item inserted", item_id: insertId };
   } catch (error) {
     console.log(error);
     return { error: error.sqlMessage, result: null };
@@ -72,7 +72,7 @@ const getItem = async (table, option) => {
   } else {
     whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
   }
-  const query_str = `SELECT * FROM \`${table}\` WHERE ${whereClause}`;
+  const query_str = `SELECT * FROM \`${table}\` WHERE ${whereClause} ORDER BY created_at desc`;
 
   try {
     const rows = await query(query_str, value);
