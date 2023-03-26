@@ -63,16 +63,21 @@ const deleteItem = async (table, id) => {
   }
 };
 
-const getItem = async (table, option) => {
+const getItem = async (table, option, userQuery = "") => {
   const value = Object.values(option);
   const keys = Object.keys(option);
   let whereClause = "";
-  if (keys.length === 1) {
-    whereClause = keys.map((key) => `${key} = ?`);
+  let query_str = "";
+  if (!userQuery) {
+    if (keys.length === 1) {
+      whereClause = keys.map((key) => `${key} = ?`);
+    } else {
+      whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
+    }
+    query_str = `SELECT * FROM \`${table}\` WHERE ${whereClause} ORDER BY created_at desc`;
   } else {
-    whereClause = keys.map((key) => `${key}= ?`).join(" AND ");
+    query_str = userQuery;
   }
-  const query_str = `SELECT * FROM \`${table}\` WHERE ${whereClause} ORDER BY created_at desc`;
 
   try {
     const rows = await query(query_str, value);
