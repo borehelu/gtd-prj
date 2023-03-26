@@ -9,6 +9,7 @@ const {
   createReference,
   createWaitingFor,
   createSomeday,
+  createCalendar,
 } = require("./rules");
 
 const validationFetch = (validationName) => {
@@ -23,6 +24,7 @@ const validationFetch = (validationName) => {
     createReference,
     createWaitingFor,
     createSomeday,
+    createCalendar,
   };
 
   return rules[validationName];

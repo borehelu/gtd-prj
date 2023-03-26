@@ -32,7 +32,44 @@ const createNextActions = [
   body("status")
     .isIn(["Pending", "In progress", "Complete"])
     .withMessage("Invalid status value."),
-  body("context_id").notEmpty().withMessage("Context is required."),
+  body("context_id")
+    .notEmpty()
+    .withMessage("Context is required.")
+    .isInt()
+    .withMessage("Invalid context value"),
+];
+
+const createCalendar = [
+  body("event_name")
+    .notEmpty()
+    .isString()
+    .withMessage("Provide event name")
+    .trim(),
+  body("event_description")
+    .notEmpty()
+    .isString()
+    .withMessage("Provide event description")
+    .trim(),
+  body("event_location")
+    .notEmpty()
+    .isString()
+    .withMessage("Provide event location")
+    .trim(),
+  body("event_date")
+    .notEmpty()
+    .withMessage("Event date is required.")
+    .isDate()
+    .withMessage("Invalid event date format."),
+  body("event_start")
+    .notEmpty()
+    .withMessage("Event start time is required.")
+    .matches(/^([01][0-9]|2[0-3]):[0-5][0-9]$/)
+    .withMessage("Invalid event start time format."),
+  body("event_end")
+    .notEmpty()
+    .withMessage("Event end time is required.")
+    .matches(/^([01][0-9]|2[0-3]):[0-5][0-9]$/)
+    .withMessage("Invalid event end time format."),
 ];
 
 const createProjects = [
@@ -86,15 +123,15 @@ const createProjectTasks = [
   body("status")
     .isIn(["Pending", "In progress", "Complete"])
     .withMessage("Invalid status value."),
-  body("context_id").notEmpty().withMessage("Context is required."),
+  body("context_id")
+    .notEmpty()
+    .withMessage("Context is required.")
+    .isInt()
+    .withMessage("Invalid context value"),
 ];
 
 const createReference = [
-  body("name")
-    .notEmpty()
-    .isString()
-    .withMessage("Provide  name")
-    .trim(),
+  body("name").notEmpty().isString().withMessage("Provide  name").trim(),
   body("description")
     .notEmpty()
     .isString()
@@ -185,4 +222,5 @@ module.exports = {
   createReference,
   createWaitingFor,
   createSomeday,
+  createCalendar,
 };
