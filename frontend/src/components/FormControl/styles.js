@@ -1,39 +1,36 @@
 import styled from "styled-components";
 
 export const InputWrapper = styled.div`
-  height: 40px;
-  position: relative;
-  border-radius: 4px;
-  background-color: #f7f7f7;
-  margin-top: 1.8rem;
+  margin-top: 1rem;
 
-  & input {
+  & input,
+  & textarea,
+  & select {
+    height: 40px;
+    border-radius: 4px;
+    background-color: #f7f7f7;
     width: 100%;
     font-size: 14px;
     display: block;
     border: none;
     border-radius: 2px;
-    background: transparent;
     padding: 0.5rem 1rem;
   }
 
-  & input:focus {
+  & input:focus,
+  & textarea:focus,
+  & select:focus {
     outline: none;
     border-bottom: 2px solid #333;
   }
 
   & label {
-    color: #999;
-    font-size: 13px;
-    position: absolute;
-    pointer-events: none;
-    left: 8px;
-    top: 10px;
-    transition: 0.2s ease all;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
   }
 
-  & input:focus ~ label,
-  & input:valid ~ label {
+  & input[type="date"] ~ label {
     top: -20px;
     left: 0;
     font-size: 14px;
@@ -41,7 +38,9 @@ export const InputWrapper = styled.div`
     font-weight: 500;
   }
 
-  & input.error {
+  & input.error,
+  & textarea.error,
+  & select.error {
     border-bottom: 2px solid #d90429;
   }
 
