@@ -318,22 +318,6 @@ button {
   color: #666;
 }
 
-.dot {
-  width: 4px;
-  height: 4px;
-  background-color: #ddd;
-  border-radius: 1rem;
-}
-
-.chip {
-  font-size: 0.75rem;
-  color: #99a8b3;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  background-color: #eff2f5;
-  font-weight: 700;
-}
-
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -436,4 +420,33 @@ button {
 .day.today p,
 .day.today h2 {
   color: var(--white);
+}
+
+@keyframes loading {
+  50% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes loading-1 {
+  50% {
+    transform: translate(-150%, -150%) scale(2);
+  }
+}
+@keyframes loading-2 {
+  50% {
+    transform: translate(150%, -150%) scale(2);
+  }
+}
+@keyframes loading-3 {
+  50% {
+    transform: translate(-150%, 150%) scale(2);
+  }
+}
+@keyframes loading-4 {
+  50% {
+    transform: translate(150%, 150%) scale(2);
+  }
 }
