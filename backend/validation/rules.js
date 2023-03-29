@@ -30,7 +30,7 @@ const createNextActions = [
     .isIn(["Low", "Medium", "High"])
     .withMessage("Invalid priority value."),
   body("status")
-    .isIn(["Pending", "In progress", "Complete"])
+    .isIn(["Pending", "In Progress", "Complete"])
     .withMessage("Invalid status value."),
   body("context_id")
     .notEmpty()
