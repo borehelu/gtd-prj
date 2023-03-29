@@ -47,10 +47,16 @@ class NextActionsController {
   }
 
   static async getNextActions(req, res) {
+    const query =
+      "SELECT n.id, n.item_name, n.description, c.name as context, n.context_id, n.due_date, n.priority, n.status, n.created_at FROM next_actions n LEFT JOIN contexts c ON n.context_id = c.id WHERE n.user_id = ?";
     try {
-      const { error, result: items } = await getItem("next_actions", {
-        user_id: req.user.userId,
-      });
+      const { error, result: items } = await getItem(
+        "next_actions",
+        {
+          user_id: req.user.userId,
+        },
+        query
+      );
       if (error) throw new Error(error);
       res.status(200).json(items);
     } catch (err) {
