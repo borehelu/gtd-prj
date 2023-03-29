@@ -9,6 +9,12 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "SET_STATE":
+      return {
+        data: action.payload,
+        loading: false,
+        error: false,
+      };
     case "REQUEST":
       return {
         data: state.data,
@@ -102,6 +108,7 @@ function useApi(url) {
       });
     } catch (error) {
       dispatch({ type: "ADD_ERROR" });
+      throw new Error(error);
     }
   };
 
@@ -131,7 +138,7 @@ function useApi(url) {
     }
   };
 
-  return { state, createItem, updateItem, removeItem };
+  return { state, dispatch, createItem, updateItem, removeItem };
 }
 
 export default useApi;
