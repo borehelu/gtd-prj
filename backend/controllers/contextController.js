@@ -7,13 +7,13 @@ class ContextController {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     const { name } = req.body;
     try {
-      const { error, result } = await createItem(table, {
+      const { error, item_id } = await createItem(table, {
         name,
         created_at,
         user_id: req.user.userId,
       });
       if (error) throw new Error(error);
-      res.status(201).json("Context added.");
+      res.status(201).json({ item_id, message: "Context added." });
     } catch (err) {
       console.log(err);
       res.status(500).json("Server Error");
