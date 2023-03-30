@@ -5,12 +5,10 @@ import { somedaySchema } from "../../../schema/";
 import toast, { Toaster } from "react-hot-toast";
 import { ButtonGroup, NewContext } from "./styles";
 import useApi from "../../../hooks/useApi";
-import useInbox from "../../../hooks/useInbox";
 import { IoAddOutline, IoChevronDownCircleOutline } from "react-icons/io5";
 
-function SomedayForm({ inbox, selected, show, setShow }) {
+function SomedayForm({ inbox, onDelete, selected, show, setShow }) {
 	const { createItem } = useApi("someday/");
-	const { removeItem } = useInbox();
 	const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
 		useFormik({
 			initialValues: {
@@ -23,7 +21,7 @@ function SomedayForm({ inbox, selected, show, setShow }) {
 				try {
 					await createItem(values);
 					toast.success("Someday added", { id: toastId });
-					removeItem(selected.id);
+					onDelete(selected.id);
 				} catch (error) {
 					console.log(error);
 					toast.error("Error adding item", { id: toastId });

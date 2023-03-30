@@ -5,7 +5,6 @@ import { referenceSchema } from "../../../schema/";
 import toast, { Toaster } from "react-hot-toast";
 import { ButtonGroup, NewContext } from "./styles";
 import useApi from "../../../hooks/useApi";
-import useInbox from "../../../hooks/useInbox";
 import { IoAddOutline, IoChevronDownCircleOutline } from "react-icons/io5";
 
 const typeOptions = [
@@ -14,9 +13,9 @@ const typeOptions = [
 	{ value: "website", label: "Website" },
 ];
 
-function ReferencesForm({ inbox, selected, show, setShow }) {
+function ReferencesForm({ inbox, onDelete, selected, show, setShow }) {
 	const { createItem } = useApi("reference/");
-	const { removeItem } = useInbox();
+
 	const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
 		useFormik({
 			initialValues: {
@@ -31,7 +30,7 @@ function ReferencesForm({ inbox, selected, show, setShow }) {
 				try {
 					await createItem(values);
 					toast.success("Reference added", { id: toastId });
-					removeItem(selected.id);
+					onDelete(selected.id);
 				} catch (error) {
 					console.log(error);
 					toast.error("Error adding item", { id: toastId });

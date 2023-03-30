@@ -5,7 +5,6 @@ import { nextActionSchema } from "../../../schema/";
 import toast, { Toaster } from "react-hot-toast";
 import { ButtonGroup, NewContext } from "./styles";
 import useApi from "../../../hooks/useApi";
-import useInbox from "../../../hooks/useInbox";
 import { IoAddOutline, IoChevronDownCircleOutline } from "react-icons/io5";
 
 const priorityOptions = [
@@ -22,12 +21,11 @@ const statusOptions = [
 
 let contextOptions = [{ value: "", label: "No context found" }];
 
-function NextActionsForm({ inbox, selected, show, setShow }) {
+function NextActionsForm({ inbox, onDelete, selected, show, setShow }) {
 	const [context, setContext] = useState("");
 	const [showContext, setShowContext] = useState(false);
 	const { createItem } = useApi("next-actions/");
 	const { createItem: createContext, state } = useApi("context/");
-	const { removeItem } = useInbox();
 
 	const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
 		useFormik({
@@ -45,7 +43,7 @@ function NextActionsForm({ inbox, selected, show, setShow }) {
 				try {
 					await createItem(values);
 					toast.success("Next action added", { id: toastId });
-					removeItem(selected.id);
+					onDelete(selected.id);
 				} catch (error) {
 					toast.error("Error adding item", { id: toastId });
 				} finally {

@@ -5,12 +5,11 @@ import { waitingforSchema } from "../../../schema/";
 import toast, { Toaster } from "react-hot-toast";
 import { ButtonGroup, NewContext } from "./styles";
 import useApi from "../../../hooks/useApi";
-import useInbox from "../../../hooks/useInbox";
 import { IoAddOutline, IoChevronDownCircleOutline } from "react-icons/io5";
 
-function WaitingForForm({ inbox, selected, show, setShow }) {
+function WaitingForForm({ inbox, onDelete, selected, show, setShow }) {
 	const { createItem } = useApi("waiting-for/");
-	const { removeItem } = useInbox();
+
 	const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
 		useFormik({
 			initialValues: {
@@ -26,7 +25,7 @@ function WaitingForForm({ inbox, selected, show, setShow }) {
 				try {
 					await createItem(values);
 					toast.success("Item added", { id: toastId });
-					removeItem(selected.id);
+					onDelete(selected.id);
 				} catch (error) {
 					console.log(error);
 					toast.error("Error adding item", { id: toastId });

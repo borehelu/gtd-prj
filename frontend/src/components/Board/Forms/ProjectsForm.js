@@ -5,7 +5,6 @@ import { projectSchema } from "../../../schema/";
 import toast, { Toaster } from "react-hot-toast";
 import { ButtonGroup, NewContext } from "./styles";
 import useApi from "../../../hooks/useApi";
-import useInbox from "../../../hooks/useInbox";
 import { IoAddOutline, IoChevronDownCircleOutline } from "react-icons/io5";
 
 const priorityOptions = [
@@ -20,9 +19,9 @@ const statusOptions = [
 	{ value: "Complete", label: "Complete" },
 ];
 
-function ProjectsForm({ inbox, selected, show, setShow }) {
+function ProjectsForm({ inbox, onDelete, selected, show, setShow }) {
 	const { createItem } = useApi("projects/");
-	const { removeItem } = useInbox();
+
 	const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
 		useFormik({
 			initialValues: {
@@ -39,7 +38,7 @@ function ProjectsForm({ inbox, selected, show, setShow }) {
 				try {
 					await createItem(values);
 					toast.success("Project added", { id: toastId });
-					removeItem(selected.id);
+					onDelete(selected.id);
 				} catch (error) {
 					console.log(error);
 					toast.error("Error adding item", { id: toastId });
