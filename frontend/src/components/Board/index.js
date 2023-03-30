@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { MdDragIndicator } from "react-icons/md";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import useInbox from "../../hooks/useInbox";
+import useApi from "../../hooks/useApi";
 import {
 	Section,
 	FolderContainer,
@@ -30,22 +30,18 @@ const folders = [
 	"references",
 ];
 
-function Board() {
-	const { state, removeItem } = useInbox();
+function Board({ state, onDelete }) {
 	const [show, setShow] = useState(false);
-	// const [selected, setSelected] = useState("");
 	const [selectedForm, setSelectedForm] = useState(null);
 
 	function handleDrop(item, type) {
-		// removeItem(item.item.id);
-		// setSelected(item.item);
-		// console.log(selected);
 		switch (type) {
 			case "next-actions":
 				setSelectedForm(
 					<NextActionsForm
 						show={show}
 						setShow={setShow}
+						onDelete={onDelete}
 						selected={item.item}
 					/>
 				);
@@ -55,6 +51,7 @@ function Board() {
 					<ProjectsForm
 						show={show}
 						setShow={setShow}
+						onDelete={onDelete}
 						selected={item.item}
 					/>
 				);
@@ -64,6 +61,7 @@ function Board() {
 					<CalendarForm
 						show={show}
 						setShow={setShow}
+						onDelete={onDelete}
 						selected={item.item}
 					/>
 				);
@@ -73,6 +71,7 @@ function Board() {
 					<WaitingForForm
 						show={show}
 						setShow={setShow}
+						onDelete={onDelete}
 						selected={item.item}
 					/>
 				);
@@ -82,6 +81,7 @@ function Board() {
 					<SomedayForm
 						show={show}
 						setShow={setShow}
+						onDelete={onDelete}
 						selected={item.item}
 					/>
 				);
@@ -91,6 +91,7 @@ function Board() {
 					<ReferencesForm
 						show={show}
 						setShow={setShow}
+						onDelete={onDelete}
 						selected={item.item}
 					/>
 				);

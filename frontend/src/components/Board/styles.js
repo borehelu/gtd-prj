@@ -113,11 +113,12 @@ export const InboxItem = styled.div`
 
 export const Section = styled.div`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	column-gap: 1rem;
 `;
 
 export const FolderList = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
 `;
