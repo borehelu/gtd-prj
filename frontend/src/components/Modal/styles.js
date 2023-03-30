@@ -16,17 +16,17 @@ export const ModalOverlay = styled.div`
 export const ModalContainer = styled.div`
   background-color: #fff;
   border-radius: 8px;
-  min-width: 340px;
+  width: 80%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
 `;
 
 export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   color: black;
-  margin-bottom: 1rem;
 `;
 
 export const ModalBody = styled.div``;
