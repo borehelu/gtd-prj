@@ -42,6 +42,57 @@ export const inboxSchema = yup.object().shape({
   item: yup.string().required("Required"),
 });
 
+export const nextActionSchema = yup.object().shape({
+  item_name: yup.string().required("Required"),
+  description: yup.string().required("Required"),
+  context_id: yup.string().required("Required"),
+  due_date: yup.date().required("Required"),
+});
+
+export const projectSchema = yup.object().shape({
+  project_name: yup.string().required("Required"),
+  description: yup.string().required("Required"),
+  outcome: yup.string().required("Required"),
+  due_date: yup.date().required("Required"),
+});
+
+export const somedaySchema = yup.object().shape({
+  item_name: yup.string().required("Required"),
+  description: yup.string().required("Required"),
+});
+
+export const waitingforSchema = yup.object().shape({
+  item_name: yup.string().required("Required"),
+  description: yup.string().required("Required"),
+  contact_name: yup.string().required("Required"),
+  contact_email: yup
+    .string()
+    .email("Please enter a valid email")
+    .required("Required"),
+  due_date: yup.date().required("Required"),
+});
+
+export const referenceSchema = yup.object().shape({
+  name: yup.string().required("Required"),
+  description: yup.string().required("Required"),
+  path: yup.string().required("Required"),
+});
+
+export const calendarSchema = yup.object().shape({
+  event_name: yup.string().required("Required"),
+  event_description: yup.string().required("Required"),
+  event_location: yup.string().required("Required"),
+  event_date: yup.date().required("Required"),
+  event_start: yup
+    .string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, "Invalid time format (HH:MM)")
+    .required("Time is required"),
+  event_end: yup
+    .string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, "Invalid time format (HH:MM)")
+    .required("Time is required"),
+});
+
 export const newIdeaSchema = yup.object().shape({
   title: yup.string().required("Required"),
   description: yup.string().required("Required"),
