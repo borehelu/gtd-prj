@@ -8,7 +8,7 @@ export const Main = styled.main`
 export const Wrapper = styled.div`
   min-width: 100vw;
   min-height: 20%;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   background-color: #f7f7f7;
   border-radius: 1rem;
   display: flex;
@@ -18,7 +18,8 @@ export const Wrapper = styled.div`
 `;
 
 export const NewInboxForm = styled.form`
-  width: 60%;
+  width: 90%;
+  max-width: 600px;
   background-color: #fff;
   border-radius: 1rem;
   padding: 0.7rem 1.5rem;
@@ -30,6 +31,7 @@ export const NewInboxForm = styled.form`
   & .form-control {
     display: flex;
     align-items: center;
+    width: 80%;
     & .icon {
       color: #999;
       font-size: 1.3rem;
@@ -38,6 +40,7 @@ export const NewInboxForm = styled.form`
       border: none;
       outline: none;
       padding: 1rem 1.5rem;
+      width: 100%;
 
       &:focus {
         outline: none;
@@ -46,18 +49,18 @@ export const NewInboxForm = styled.form`
   }
 
   & .add_inbox_btn {
-    width: 120px;
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 0.6rem 1.5rem;
+    padding: 0.6rem 1rem;
     border-radius: 0.6rem;
     font-size: 0.9rem;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    column-gap: 0.5rem;
     font-weight: 500;
-
+    min-width: 90px;
     & .icon {
       font-size: 0.9rem;
     }
@@ -65,13 +68,14 @@ export const NewInboxForm = styled.form`
 `;
 
 export const Section = styled.section`
-  width: 60%;
+  width: 80%;
+  max-width: 600px;
   margin: 1rem auto;
 
   & .heading {
     display: flex;
     justify-content: space-between;
-
+    margin: 2rem 0;
     & button {
       display: flex;
       justify-content: center;
@@ -104,4 +108,27 @@ export const ButtonGroup = styled.div`
   }
 }
 
+`;
+
+export const InboxWrapper = styled.div`
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 1rem 0;
+  border: 1px solid #efefef;
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.15),
+    2px 0 3px -2px rgba(0, 0, 0, 0.15);
+`;
+
+export const Item = styled.h2`
+  font-size: 0.975rem;
+  color: #444;
+  font-weight: 600;
+`;
+
+export const Time = styled.p`
+  font-size: 0.725rem;
+  color: #555;
 `;

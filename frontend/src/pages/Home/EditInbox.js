@@ -1,55 +1,46 @@
 import { useState, useEffect } from "react";
-import { RiErrorWarningLine } from "react-icons/ri";
-
-import useInbox from "../../hooks/useInbox";
+import { useFormik } from "formik";
 import Modal from "../../components/Modal";
-import { InputWrapper } from "../../components/FormControl/styles";
+import FormControl from "../../components/FormControl";
 import { inboxSchema } from "../../schema";
-import { ButtonGroup } from "./styles";
+import { ButtonGroup, NewContext } from "./styles";
 
-function EditInbox() {
-	const [item, setItem] = useState("");
-	const [error, setError] = useState("");
-	const { selected, showEditing, setShowEditing, updateItem } = useInbox();
+function EditInbox({ onUpdate, active, isEditing, setIsEditing }) {
+	const [initialValues, setInitialValues] = useState({ item: "" });
 
 	useEffect(() => {
-		if (selected) setItem(selected.item);
-	}, [selected]);
+		if (active) setInitialValues({ item: active.item });
+	}, [active]);
 
-	if (!selected) return null;
+	const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
+		useFormik({
+			initialValues,
+			enableReinitialize: true,
+			validationSchema: inboxSchema,
+			onSubmit: () => {
+				onUpdate(active.id, { ...active, item: values.item });
+			},
+		});
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (item.trim()) {
-			updateItem(selected.id, { ...selected, item });
-			setShowEditing(false);
-		}
-	};
 	return (
-		<Modal show={showEditing} setShow={setShowEditing} title="Edit Item">
+		<Modal show={isEditing} setShow={setIsEditing} title="Edit Item">
 			<form onSubmit={handleSubmit}>
-				<InputWrapper>
-					<input
-						type="text"
-						name="item"
-						id="item"
-						onChange={(e) => setItem(e.target.value)}
-						value={item}
-						required
-					/>
-					<label htmlFor="item">Item</label>
-				</InputWrapper>
-				{error && (
-					<small>
-						<RiErrorWarningLine /> {error}
-					</small>
-				)}
+				<FormControl
+					type="text"
+					id="item"
+					label="Inbox item"
+					handleBlur={handleBlur}
+					handleChange={handleChange}
+					touched={touched}
+					errors={errors}
+					values={values}
+				/>
 
 				<ButtonGroup>
 					<button type="submit" className="primary">
 						Save
 					</button>
-					<button type="button" onClick={() => setShowEditing(false)}>
+					<button type="button" onClick={() => setIsEditing(false)}>
 						Cancel
 					</button>
 				</ButtonGroup>

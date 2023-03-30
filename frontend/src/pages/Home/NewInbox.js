@@ -1,14 +1,11 @@
 import { useRef, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-
 import { Wrapper, NewInboxForm } from "./styles";
 import { IoSendOutline, IoFileTrayOutline } from "react-icons/io5";
-import useInbox from "../../hooks/useInbox";
+import useApi from "../../hooks/useApi";
 
-function NewInbox() {
+function NewInbox({ onAdd }) {
   const input_ref = useRef(null);
   const [item, setItem] = useState("");
-  const { createItem } = useInbox();
 
   useEffect(() => {
     input_ref.current.focus();
@@ -16,17 +13,8 @@ function NewInbox() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const toastId = toast.loading("Adding inbox");
-
     if (item) {
-      const created_at = new Date();
-      try {
-        createItem({ item, created_at });
-        toast.success("Item added", { id: toastId });
-      } catch (e) {
-        toast.error(e.message, { id: toastId });
-      }
-
+      onAdd(item);
       setItem("");
     }
   };
