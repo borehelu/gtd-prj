@@ -1,65 +1,14 @@
 import Modal from "../../components/Modal";
 import useApi from "../../hooks/useApi";
 import styled from "styled-components";
-import { ButtonGroup } from "./styles";
+import {
+	ButtonGroup,
+	FormControl,
+	ContextWrapper,
+	ContextInput,
+} from "./styles";
 import { useState, useEffect } from "react";
-
-const FormControl = styled.div`
-	display: flex;
-	flex-direction: column;
-	row-gap: 0.3rem;
-
-	& label {
-		font-size: 0.9rem;
-	}
-	& select {
-		background-color: #f7f7f7;
-		border: none;
-		padding: 8px 16px;
-		border-radius: 8px;
-		color: #555;
-		font-size: 0.9rem;
-	}
-`;
-
-const priorityOptions = [
-	{ value: "High", label: "High" },
-	{ value: "Medium", label: "Medium" },
-	{ value: "Low", label: "Low" },
-];
-
-const statusOptions = [
-	{ value: "Pending", label: "Pending" },
-	{ value: "In Progress", label: "In Progress" },
-	{ value: "Complete", label: "Complete" },
-];
-
-const dueDateOptions = [
-	{ value: "Pending", label: "Today" },
-	{ value: "In Progress", label: "Tomorrow" },
-	{ value: "Complete", label: "This week" },
-];
-
-const ContextWrapper = styled.div`
-	font-size: 0.9rem;
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 1rem;
-	& div {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.8rem 0.5rem;
-	}
-`;
-
-const ContextInput = styled.div`
-	display: grid;
-	grid-template-columns: auto 1rem;
-	border: 1px solid #ddd;
-	border-radius: 1rem;
-	padding: 5px 12px;
-	font-size: 0.9rem;
-`;
+import { priorityOptions, statusOptions, dueDateOptions } from "./helper";
 
 function FilterModal({ showFilter, setShowFilter, dispatch }) {
 	const { state } = useApi("context/");
