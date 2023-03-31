@@ -11,7 +11,7 @@ import usePagination from "../../hooks/usePagination";
 import Pagination from "../../components/Pagination";
 import { IoListOutline } from "react-icons/io5";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { handleFilter, handleSearch, checkFilters } from "./helper";
+import { searchAndFilter } from "./helper";
 
 function NextActions() {
   const { state, createItem, updateItem, removeItem } = useApi("next-actions/");
@@ -19,25 +19,6 @@ function NextActions() {
   const [isEditing, setIsEditing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterParams, dispatch] = useFilter();
-
-  // const { handlePageChange, currentPage, currentData, setCurrentData } =
-  //   usePagination(filteredData, 5);
-
-  // useEffect(() => {
-  //   if (searchQuery) {
-  //     setCurrentData(handleSearch(state.data, searchQuery));
-  //   } else {
-  //     setCurrentData(state.data);
-  //   }
-  // }, [searchQuery]);
-
-  // useEffect(() => {
-  //   if (checkFilters(filterParams)) {
-  //     setFilteredData(handleFilter(state.data, filterParams));
-  //   } else {
-  //     setFilteredData(currentData);
-  //   }
-  // }, [filterParams]);
 
   const handleUpdate = async (id, updatedItem) => {
     const toastId = toast.loading("Updating...");
@@ -82,7 +63,7 @@ function NextActions() {
         <LoadingSpinner />
       ) : (
         <NextActionsList
-          data={state.data}
+          data={searchAndFilter(state.data, searchQuery, filterParams)}
           onDelete={handleDelete}
           setActive={setActive}
           setIsEditing={setIsEditing}
@@ -93,10 +74,3 @@ function NextActions() {
 }
 
 export default NextActions;
-
-// <Pagination
-//   itemsPerPage={5}
-//   totalItems={state.data.length}
-//   currentPage={currentPage}
-//   onPageChange={handlePageChange}
-// />
