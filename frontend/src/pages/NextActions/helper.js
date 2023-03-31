@@ -1,10 +1,8 @@
 export function handleSearch(data, searchQuery) {
 	const results = data.filter((item) => {
-		const nameArray = item.item_name.toLowerCase().split(" ");
-		const descriptionArray = item.description.toLowerCase().split(" ");
 		if (
-			nameArray.includes(searchQuery.toLowerCase()) ||
-			descriptionArray.includes(searchQuery.toLowerCase())
+			item.item_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			item.description.toLowerCase().includes(searchQuery.toLowerCase())
 		)
 			return true;
 		return false;
@@ -65,4 +63,13 @@ export function handleFilter(data, filterParams) {
 	});
 
 	return filtered;
+}
+
+export function searchAndFilter(data, searchQuery, filterParams) {
+	if (checkFilters(filterParams)) {
+		let results = handleFilter(data, filterParams);
+		return handleSearch(results, searchQuery);
+	} else {
+		return handleSearch(data, searchQuery);
+	}
 }
