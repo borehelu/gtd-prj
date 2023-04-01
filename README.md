@@ -34,11 +34,11 @@ A user should be able to:
 5. Schedule appointments and events using the "Calendar" feature
 
 ## Screenshot
-<img src="./login-sc.png" alt="Screenshot of GTD App" width="400" height="auto">
-<img src="./inbox-sc.png" alt="Screenshot of GTD App" width="400" height="auto">
-<img src="./clarify-sc.png" alt="Screenshot of GTD App" width="400" height="auto">
-<img src="./nextactions-sc.png" alt="Screenshot of GTD App" width="400" height="auto">
-<img src="./projects-sc.png" alt="Screenshot of GTD App" width="400" height="auto">
+<img src="./login-sc.png" alt="Screenshot of GTD App"  height="300">
+<img src="./inbox-sc.png" alt="Screenshot of GTD App"  height="300">
+<img src="./clarify-sc.png" alt="Screenshot of GTD App" height="300">
+<img src="./nextactions-sc.png" alt="Screenshot of GTD App" height="300">
+<img src="./projects-sc.png" alt="Screenshot of GTD App" height="300">
 
 
 ## Links
