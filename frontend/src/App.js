@@ -8,6 +8,7 @@ import RequireAuth from "./components/RequireAuth";
 import Home from "./pages/Home";
 import NextActions from "./pages/NextActions";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/Projects/ProjectDetail";
 import Calendar from "./pages/Calendar";
 import WaitingFor from "./pages/WaitingFor";
 import Someday from "./pages/SomedayMaybe";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/next-actions" element={<NextActions />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/waiting-for" element={<WaitingFor />} />
           <Route path="/someday-maybe" element={<Someday />} />
