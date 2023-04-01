@@ -1,4 +1,4 @@
-# gtd-prj
+# GTD App
 GTD app is a task management web app that uses the GTD methodology to help you stay organized and productive.
 
 ## Features
