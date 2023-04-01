@@ -2,11 +2,11 @@
 GTD app is a task management web app that uses the GTD methodology to help you stay organized and productive.
 
 ## Features
-Capture ideas and commitments quickly and easily
-Organize tasks and projects by context and priority
-Track progress on tasks and projects
-Schedule appointments and events
-Easily review and update your tasks and projects
+-Capture ideas and commitments quickly and easily
+-Organize tasks and projects by context and priority
+-Track progress on tasks and projects
+-Schedule appointments and events
+-Easily review and update your tasks and projects
 
 
 ## Usage
