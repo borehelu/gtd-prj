@@ -35,11 +35,11 @@ A user should be able to:
 
 ## Screenshot
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-<img src="./login-sc.png" alt="Screenshot of GTD App" width="400" >
-<img src="./inbox-sc.png" alt="Screenshot of GTD App"  width="400" >
-<img src="./clarify-sc.png" alt="Screenshot of GTD App"  width="400">
-<img src="./nextactions-sc.png" alt="Screenshot of GTD App"  width="400">
-<img src="./projects-sc.png" alt="Screenshot of GTD App"  width="400">
+<img src="./login-sc.png" alt="Screenshot of GTD App" style="max-width: 100%;">
+<img src="./inbox-sc.png" alt="Screenshot of GTD App"  style="max-width: 100%;">
+<img src="./clarify-sc.png" alt="Screenshot of GTD App" style="max-width: 100%;">
+<img src="./nextactions-sc.png" alt="Screenshot of GTD App" style="max-width: 100%;">
+<img src="./projects-sc.png" alt="Screenshot of GTD App"  style="max-width: 100%;">
 </div>
 
 ## Links
