@@ -45,11 +45,20 @@ A user should be able to:
 
 ### Built with
 
+Frontend
+
 - Semantic HTML5 markup
 - CSS custom properties
-- Flexbox
-- CSS Preprocessor SASS
+- Flexbox, Grid
+- Styled-Components
+- React dnd
 - Mobile-first workflow
+
+Backend
+- Nodejs
+- Express, Express-validator
+- MySQL
+- JWT tokens for authentication
 
 
 ### What I learned
