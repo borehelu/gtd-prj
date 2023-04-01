@@ -34,7 +34,11 @@ A user should be able to:
 5. Schedule appointments and events using the "Calendar" feature
 
 ## Screenshot
-
+![](./login-sc.png)
+![](./inbox-sc.png)
+![](./clarify-sc.png)
+![](./nextactions-sc.png)
+![](./projects-sc.png)
 
 ## Links
 
