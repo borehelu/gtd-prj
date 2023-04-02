@@ -13,7 +13,7 @@ import {
 	DueDate,
 } from "./styles";
 
-function Project({ item, onDelete, setActive, setIsEditing }) {
+function Project({ item, onDelete, setActive, setIsEditing, setIsShown }) {
 	return (
 		<NextItemContainer>
 			<Heading>
@@ -27,6 +27,7 @@ function Project({ item, onDelete, setActive, setIsEditing }) {
 					setActive={setActive}
 					onDelete={onDelete}
 					setIsEditing={setIsEditing}
+					setIsShown={setIsShown}
 				/>
 			</Heading>
 
