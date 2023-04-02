@@ -73,3 +73,21 @@ export function searchAndFilter(data, searchQuery, filterParams) {
 		return handleSearch(data, searchQuery);
 	}
 }
+
+export const priorityOptions = [
+	{ value: "High", label: "High" },
+	{ value: "Medium", label: "Medium" },
+	{ value: "Low", label: "Low" },
+];
+
+export const statusOptions = [
+	{ value: "Pending", label: "Pending" },
+	{ value: "In Progress", label: "In Progress" },
+	{ value: "Complete", label: "Complete" },
+];
+
+export const dueDateOptions = [
+	{ value: "Pending", label: "Today" },
+	{ value: "In Progress", label: "Tomorrow" },
+	{ value: "Complete", label: "This week" },
+];
