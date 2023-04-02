@@ -217,7 +217,7 @@ export const Priority = styled.div`
 `;
 
 export const Status = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   column-gap: 0.3rem;
   font-size: 0.8rem;
