@@ -10,6 +10,7 @@ import { IoBriefcaseOutline } from "react-icons/io5";
 import useApi from "../../hooks/useApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { searchAndFilter } from "./helper";
+import ProjectDetail from "./ProjectDetail";
 
 function Projects() {
   const { state, createItem, updateItem, removeItem } = useApi("projects/");
@@ -17,6 +18,7 @@ function Projects() {
   const [filterParams, dispatch] = useFilter();
   const [active, setActive] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isShown, setIsShown] = useState(false);
 
   const handleUpdate = async (id, updatedItem) => {
     const toastId = toast.loading("Updating...");
@@ -56,6 +58,12 @@ function Projects() {
         setIsEditing={setIsEditing}
       />
 
+      <ProjectDetail
+        active={active}
+        isShown={isShown}
+        setIsShown={setIsShown}
+      />
+
       <ActionsBar filterParams={filterParams} dispatch={dispatch} />
 
       {state.loading ? (
@@ -66,6 +74,7 @@ function Projects() {
           onDelete={handleDelete}
           setActive={setActive}
           setIsEditing={setIsEditing}
+          setIsShown={setIsShown}
         />
       )}
     </Main>
