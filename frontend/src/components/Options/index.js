@@ -10,7 +10,7 @@ import {
 	IoEyeOutline,
 } from "react-icons/io5";
 
-function Options({ item, onDelete, setActive, setIsEditing, url }) {
+function Options({ item, onDelete, setActive, setIsEditing, setIsShown }) {
 	const [show, setShow] = useState(false);
 	const navigate = useNavigate();
 
@@ -25,7 +25,9 @@ function Options({ item, onDelete, setActive, setIsEditing, url }) {
 	};
 
 	const handleView = () => {
-		navigate(`${url + item.id}`);
+		setActive(item);
+		setShow(false);
+		setIsShown(true);
 	};
 
 	return (
@@ -35,7 +37,7 @@ function Options({ item, onDelete, setActive, setIsEditing, url }) {
 			</button>
 			{show && (
 				<OptionsMenu>
-					{url && (
+					{setIsShown && (
 						<button onClick={handleView}>
 							<IoEyeOutline /> view
 						</button>
