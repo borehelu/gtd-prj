@@ -9,7 +9,7 @@ import { IoAddOutline, IoChevronDownCircleOutline } from "react-icons/io5";
 
 const priorityOptions = [
 	{ value: "High", label: "High" },
-	{ value: "Mid", label: "Mid" },
+	{ value: "Medium", label: "Medium" },
 	{ value: "Low", label: "Low" },
 ];
 
