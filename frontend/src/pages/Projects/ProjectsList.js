@@ -4,7 +4,7 @@ import usePagination from "../../hooks/usePagination";
 import Pagination from "../../components/Pagination";
 import Project from "./Project";
 
-function ProjectsList({ data, onDelete, setActive, setIsEditing }) {
+function ProjectsList({ data, onDelete, setActive, setIsEditing, setIsShown }) {
 	const { handlePageChange, currentPage, currentData, setCurrentData } =
 		usePagination(data, 5);
 
@@ -18,6 +18,7 @@ function ProjectsList({ data, onDelete, setActive, setIsEditing }) {
 						onDelete={onDelete}
 						setActive={setActive}
 						setIsEditing={setIsEditing}
+						setIsShown={setIsShown}
 					/>
 				))
 			) : (
