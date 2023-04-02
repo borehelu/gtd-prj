@@ -4,12 +4,18 @@ import styled from "styled-components";
 import useApi from "../../hooks/useApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import Options from "../../components/Options";
+import Modal from "../../components/Modal";
 import { formatDate } from "../../utils/date";
 import formatStatus from "../../utils/status";
-import { IoArrowBackOutline } from "react-icons/io5";
+import {
+	IoArrowBackOutline,
+	IoStopwatchOutline,
+	IoAddOutline,
+} from "react-icons/io5";
 import toast, { Toaster } from "react-hot-toast";
 import EditProject from "./EditProject";
 import { Status, DueDate } from "./styles";
+import { HiOutlineHashtag } from "react-icons/hi2";
 
 const Main = styled.main`
 	width: 100vw;
@@ -33,83 +39,89 @@ const Wrapper = styled.section`
 
 const Flex = styled.div`
 	display: flex;
-	column-gap: 1rem;
+	align-items: center;
+	column-gap: 0.3rem;
+	margin-top: ${(props) => (props.margin ? "1rem" : "0.4rem")};
+	& svg {
+		font-size: 0.8rem;
+	}
+
+	& h2 {
+		font-size: 1.15rem;
+		color: #555;
+	}
 `;
 
-const ProjectName = styled.h1``;
-const ProjectDescription = styled.p``;
-const ProjectOutcome = styled.p``;
-const ProjectPriority = styled.div``;
-const ProjectDuedate = styled.div``;
+const ProjectDescription = styled.p`
+	margin-left: 1.2rem;
+	color: #666;
+	font-size: 0.935rem;
+`;
 
-function ProjectDetail() {
-	const { id } = useParams();
-	const { state } = useApi(`projects/${id}`);
-	const { updateItem, removeItem } = useApi("projects/");
-	const [active, setActive] = useState(null);
-	const [isEditing, setIsEditing] = useState(false);
-	const navigate = useNavigate();
+const ProjectDuedate = styled.div`
+	display: flex;
+	align-items: center;
+	column-gap: 0.2rem;
+	font-size: 0.85rem;
+	color: #555;
+`;
 
-	const handleUpdate = async (id, updatedItem) => {
-		const toastId = toast.loading("Updating...");
-		try {
-			await updateItem(id, updatedItem);
-			toast.success("Item updated", { id: toastId });
-		} catch (error) {
-			toast.error("Error updating item", { id: toastId });
-		} finally {
-			setIsEditing(false);
-		}
-	};
+const ProjectNextActions = styled.div`
+	margin-left: 1.2rem;
+	color: #666;
 
-	const handleDelete = (id) => {
-		const toastId = toast.loading("Deleting...");
-		try {
-			removeItem(id);
-			toast.success("Item deleted!", { id: toastId });
-			navigate("/projects/");
-		} catch (e) {
-			toast.error(e.message, { id: toastId });
-		}
-	};
+	& button {
+		display: flex;
+		align-items: center;
+		column-gap: 0.4rem;
+		color: #666;
+		font-size: 0.9rem;
+		border-radius: 4px;
+		padding: 0.3rem 0.8rem;
+		border: 1px solid #ddd;
+		margin: 1rem auto;
+	}
+`;
 
-	if (state.loading) return <LoadingSpinner />;
+const NextActionInput = styled.div``;
 
+function ProjectDetail({ isShown, setIsShown, active }) {
+	if (!active) return null;
 	return (
-		<Main>
-			<Toaster />
-			<EditProject
-				onUpdate={handleUpdate}
-				active={active}
-				isEditing={isEditing}
-				setIsEditing={setIsEditing}
-			/>
-			<Wrapper>
-				<Link to="/projects/">
-					<IoArrowBackOutline /> Back to projects
-				</Link>
-				<Flex>
-					<ProjectName>{state.data.project_name}</ProjectName>
-					<Status className={`${formatStatus(state.data.status)}`}>
-						<div className="dot"></div>
-						{state.data.status}
-					</Status>
-					<Options
-						item={state.data}
-						setActive={setActive}
-						onDelete={handleDelete}
-						setIsEditing={setIsEditing}
-					/>
-				</Flex>
+		<Modal show={isShown} setShow={setIsShown} title={active.project_name}>
+			<Flex>
+				<Status className={`${formatStatus(active.status)}`}>
+					<div className="dot"></div>
+					{active.status}
+				</Status>
 				<ProjectDuedate>
-					{`In ` + formatDate(new Date(state.data.due_date))}
+					<IoStopwatchOutline />
+					Due in <em>{formatDate(new Date(active.due_date))}</em>
 				</ProjectDuedate>
-				<ProjectDescription>
-					{state.data.description}
-				</ProjectDescription>
-				<ProjectOutcome>{state.data.outcome}</ProjectOutcome>
-			</Wrapper>
-		</Main>
+			</Flex>
+			<Flex margin={true}>
+				<HiOutlineHashtag />
+				<h2>Description</h2>
+			</Flex>
+			<ProjectDescription>{active.description}</ProjectDescription>
+			<Flex margin={true}>
+				<HiOutlineHashtag />
+				<h2>Outcome</h2>
+			</Flex>
+			<ProjectDescription>{active.outcome}</ProjectDescription>
+			<Flex margin={true}>
+				<HiOutlineHashtag />
+				<h2>Next actions</h2>
+			</Flex>
+			<ProjectNextActions>
+				<p>Next actions not added yet!</p>
+				<NextActionInput />
+				<button>
+					<IoAddOutline />
+					Add
+				</button>
+			</ProjectNextActions>
+		</Modal>
 	);
 }
 
