@@ -228,3 +228,42 @@ export const DueDate = styled.div`
   border-radius: 1rem;
   color: #555;
 `;
+
+export const FormControl = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.3rem;
+
+  & label {
+    font-size: 0.9rem;
+  }
+  & select {
+    background-color: #f7f7f7;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: #555;
+    font-size: 0.9rem;
+  }
+`;
+
+export const ContextWrapper = styled.div`
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  & div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 0.5rem;
+  }
+`;
+
+export const ContextInput = styled.div`
+  display: grid;
+  grid-template-columns: auto 1rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+`;
