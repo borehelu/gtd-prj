@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "../../utils/devices";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -16,6 +17,10 @@ export const Wrapper = styled.div`
     border-radius: 0.4rem;
     box-shadow: 1px 3px 5px -1px rgba(0, 0, 0, 0.1);
     padding: 0;
+  }
+
+  @media ${device.tablet} {
+    grid-template-columns: 1fr 1fr;
   }
 `;
 
@@ -86,5 +91,9 @@ export const RightPanel = styled.div`
 
   & img {
     height: 60%;
+  }
+
+  @media ${device.mobileL} {
+    display: none;
   }
 `;
