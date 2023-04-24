@@ -82,5 +82,3 @@ function Projects() {
 }
 
 export default Projects;
-
-// searchAndFilter(state.data, searchQuery, filterParams)

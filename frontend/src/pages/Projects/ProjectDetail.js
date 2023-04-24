@@ -16,6 +16,7 @@ import toast, { Toaster } from "react-hot-toast";
 import EditProject from "./EditProject";
 import { Status, DueDate } from "./styles";
 import { HiOutlineHashtag } from "react-icons/hi2";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Main = styled.main`
 	width: 100vw;
@@ -83,9 +84,34 @@ const ProjectNextActions = styled.div`
 	}
 `;
 
-const NextActionInput = styled.div``;
+const FormControl = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+const nextactions = [
+	{ id: 1, description: "Lorem ipusm asdf adfasdf", status: "Complete" },
+	{ id: 2, description: "Lorem ipusm asdf adfasdf", status: "Complete" },
+	{ id: 3, description: "Lorem ipusm asdf adfasdf", status: "Pending" },
+];
 
 function ProjectDetail({ isShown, setIsShown, active }) {
+	const [nextActions, setNextActions] = useState([]);
+	const [showInput, setShowInput] = useState(false);
+	const axiosPrivate = useAxiosPrivate();
+
+	useEffect(() => {
+		async function fetchNextActions() {
+			const res = await axiosPrivate(`projects/${active.id}/tasks`);
+			setNextActions(res.data);
+		}
+
+		if (active) {
+			fetchNextActions();
+			console.log(nextActions);
+		}
+	}, [active]);
+
 	if (!active) return null;
 	return (
 		<Modal show={isShown} setShow={setIsShown} title={active.project_name}>
@@ -111,15 +137,34 @@ function ProjectDetail({ isShown, setIsShown, active }) {
 			<ProjectDescription>{active.outcome}</ProjectDescription>
 			<Flex margin={true}>
 				<HiOutlineHashtag />
-				<h2>Next actions</h2>
+				<h2>Next Actions</h2>
 			</Flex>
 			<ProjectNextActions>
-				<p>Next actions not added yet!</p>
-				<NextActionInput />
-				<button>
-					<IoAddOutline />
-					Add
-				</button>
+				{nextActions.length > 0 ? (
+					nextActions.map((item, i) => (
+						<div>
+							<label htmlFor="item.id">
+								<input
+									type="checkbox"
+									id={item.id}
+									checked={item.status === "Complete"}
+								/>
+								{item.description}
+							</label>
+						</div>
+					))
+				) : (
+					<p>Next actions not added</p>
+				)}
+
+				{showInput && (
+					<FormControl>
+						<label htmlFor="next_action">Next action</label>
+						<textarea name="" id="next_action"></textarea>
+					</FormControl>
+				)}
+
+				<button onClick={() => setShowInput(!showInput)}>Add</button>
 			</ProjectNextActions>
 		</Modal>
 	);
