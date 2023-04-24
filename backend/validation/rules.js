@@ -63,12 +63,12 @@ const createCalendar = [
   body("event_start")
     .notEmpty()
     .withMessage("Event start time is required.")
-    .matches(/^([01][0-9]|2[0-3]):[0-5][0-9]$/)
+    .matches(/^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)
     .withMessage("Invalid event start time format."),
   body("event_end")
     .notEmpty()
     .withMessage("Event end time is required.")
-    .matches(/^([01][0-9]|2[0-3]):[0-5][0-9]$/)
+    .matches(/^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)
     .withMessage("Invalid event end time format."),
 ];
 
@@ -112,22 +112,22 @@ const createProjectTasks = [
     .isString()
     .withMessage("Provide task description")
     .trim(),
-  body("due_date")
-    .notEmpty()
-    .withMessage("Due date is required.")
-    .isDate()
-    .withMessage("Invalid due date format."),
-  body("priority")
-    .isIn(["Low", "Medium", "High"])
-    .withMessage("Invalid priority value."),
-  body("status")
-    .isIn(["Pending", "In progress", "Complete"])
-    .withMessage("Invalid status value."),
-  body("context_id")
-    .notEmpty()
-    .withMessage("Context is required.")
-    .isInt()
-    .withMessage("Invalid context value"),
+  // body("due_date")
+  //   .notEmpty()
+  //   .withMessage("Due date is required.")
+  //   .isDate()
+  //   .withMessage("Invalid due date format."),
+  // body("priority")
+  //   .isIn(["Low", "Medium", "High"])
+  //   .withMessage("Invalid priority value."),
+  // body("status")
+  //   .isIn(["Pending", "In progress", "Complete"])
+  //   .withMessage("Invalid status value."),
+  // body("context_id")
+  //   .notEmpty()
+  //   .withMessage("Context is required.")
+  //   .isInt()
+  //   .withMessage("Invalid context value"),
 ];
 
 const createReference = [
@@ -149,12 +149,7 @@ const createWaitingFor = [
     .isString()
     .withMessage("Provide task description")
     .trim(),
-  body("contact_name")
-    .matches(nameRegex)
-    .trim()
-    .withMessage(
-      "Contact name should be an alphabet between 2 and 250 characters"
-    ),
+  body("contact_name").notEmpty().isString().withMessage("Provide name").trim(),
   body("contact_email")
     .notEmpty()
     .isEmail()
