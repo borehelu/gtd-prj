@@ -67,7 +67,14 @@ class CalendarController {
 
   static async updateCalendar(req, res) {
     const itemId = req.params.id;
-    const { item } = req.body;
+    const {
+      event_name,
+      event_description,
+      event_date,
+      event_start,
+      event_end,
+      event_location,
+    } = req.body;
 
     if (!itemId) return res.status(400).json({ message: "Id is required!" });
 
@@ -80,7 +87,18 @@ class CalendarController {
         return res
           .status(403)
           .json({ message: "You are not authorized to update this resource!" });
-      await updateItem("inbox", { id: itemId }, { item });
+      await updateItem(
+        "calendar",
+        { id: itemId },
+        {
+          event_name,
+          event_description,
+          event_date,
+          event_start,
+          event_end,
+          event_location,
+        }
+      );
       res.status(200).json({ message: "Item updated!" });
     } catch (err) {
       console.log(err);
@@ -100,7 +118,11 @@ class CalendarController {
       if (error) throw new Error(error);
       if (row.length === 0)
         return res.status(404).json({ message: "Item not found!" });
-      await deleteItem("inbox", itemId);
+      if (row[0].user_id !== req.user.userId)
+        return res
+          .status(403)
+          .json({ messsage: "You are not authorized to delete the resource." });
+      await deleteItem("calendar", itemId);
       res.status(200).json({ message: "Item deleted." });
     } catch (err) {
       console.log(err);

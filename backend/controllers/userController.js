@@ -1,9 +1,4 @@
-const {
-  createItem,
-  updateItem,
-  deleteItem,
-  getItem,
-} = require("../database");
+const { createItem, updateItem, deleteItem, getItem } = require("../database");
 
 const {
   hashPassword,
@@ -56,10 +51,14 @@ class UserController {
         let match = await comparePassword(password, result[0].password);
         if (match) {
           let accessToken = getAccessToken({
+            first_name: result[0].first_name,
+            last_name: result[0].last_name,
             email: result[0].email,
             userId: result[0].id,
           });
           let refreshToken = getRefreshToken({
+            first_name: result[0].first_name,
+            last_name: result[0].last_name,
             email: result[0].email,
             userId: result[0].id,
           });
@@ -106,10 +105,14 @@ class UserController {
         }
 
         let accessToken = getAccessToken({
+          first_name: result[0].first_name,
+          last_name: result[0].last_name,
           email: result[0].email,
           userId: result[0].id,
         });
         let refreshToken = getRefreshToken({
+          first_name: result[0].first_name,
+          last_name: result[0].last_name,
           email: result[0].email,
           userId: result[0].id,
         });
@@ -189,7 +192,7 @@ class UserController {
     const hashedPassword = await hashPassword(password);
     try {
       const { error, result } = await getItem("users", { auth_token: token });
-      if(error) res.sendStatus(500);
+      if (error) res.sendStatus(500);
       if (result.length === 0)
         return res.status(401).json({ message: "Error setting password!" });
 

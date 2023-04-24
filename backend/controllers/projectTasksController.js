@@ -4,7 +4,7 @@ const { createItem, updateItem, deleteItem, getItem } = require("../database");
 const table = "project_tasks";
 const isOwner = async (project_id, user_id) => {
   const { error, result } = await getItem("projects", {
-    id:project_id,
+    id: project_id,
     user_id,
   });
   if (error) throw new Error(error);
@@ -62,7 +62,7 @@ class ProjectTasksController {
         project_id,
       });
       if (error) throw new Error(error);
-      if (result.length === 0) return res.status(404).json("Not found");
+      if (result.length === 0) return res.status(200).json([]);
       res.status(200).json(result);
     } catch (err) {
       console.log(err);
