@@ -53,6 +53,7 @@ function NextActionsForm({ inbox, onDelete, selected, show, setShow }) {
 		});
 
 	if (state.data.length > 0) {
+		console.log(state.data, "context from db");
 		const options = state.data.map((context) => ({
 			value: context.id,
 			label: context.name,

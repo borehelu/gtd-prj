@@ -24,7 +24,11 @@ function CalendarForm({ inbox, onDelete, selected, show, setShow }) {
 			onSubmit: async () => {
 				const toastId = toast.loading("Adding...");
 				try {
-					await createItem(values);
+					await createItem({
+						...values,
+						event_start: values.event_start + ":00",
+						event_end: values.event_end + ":00",
+					});
 					toast.success("Calendar added", { id: toastId });
 					onDelete(selected.id);
 				} catch (error) {

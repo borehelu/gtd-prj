@@ -3,10 +3,17 @@ import SideNav from "./Sidenav";
 import { IoMenuOutline } from "react-icons/io5";
 import profilePic from "../assets/img/helu.png";
 import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+
+function getLastName(token) {
+  const tokenArray = token.split(".");
+  return JSON.parse(atob(tokenArray[1])).last_name;
+}
 
 function Layout() {
   const [show, setShow] = useState("");
   const [padding, setPadding] = useState("");
+  const { auth } = useAuth();
 
   const toggleNavigation = () => {
     setShow((prev) => {
@@ -31,11 +38,8 @@ function Layout() {
         </button>
         <div className="profile">
           <p>
-            Hello, <span>Helu</span>
+            Hello, <span>{getLastName(auth.accessToken)}</span>
           </p>
-          <picture>
-            <img src={profilePic} alt="profile pic" />
-          </picture>
         </div>
       </header>
       <SideNav show={show} setShow={setShow} />

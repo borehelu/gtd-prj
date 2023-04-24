@@ -51,6 +51,7 @@ function SideNav({ show }) {
               <IoCalendarOutline className="icon" />
             </NavLink>
           </li>
+
           <li className="nav_link">
             <NavLink to="/waiting-for">
               <IoPeopleCircleOutline className="icon" />
