@@ -1,8 +1,20 @@
-import React from "react";
-
+import { Container, Heading, Name, Description } from "./styles";
+import Options from "../../components/Options";
 function Someday({ item, onDelete, setActive, setIsEditing, setIsShown }) {
-	console.log(item);
-	return <div>{item.item_name}</div>;
+	return (
+		<Container>
+			<Heading>
+				<Name>{item.item_name}</Name>
+				<Options
+					item={item}
+					setActive={setActive}
+					onDelete={onDelete}
+					setIsEditing={setIsEditing}
+				/>
+			</Heading>
+			<Description>{item.description}</Description>
+		</Container>
+	);
 }
 
 export default Someday;

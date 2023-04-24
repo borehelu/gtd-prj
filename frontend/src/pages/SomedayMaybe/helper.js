@@ -1,9 +1,7 @@
 export function handleSearch(data, searchQuery) {
 	const results = data.filter((item) => {
 		if (
-			item.project_name
-				.toLowerCase()
-				.includes(searchQuery.toLowerCase()) ||
+			item.item_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			item.description.toLowerCase().includes(searchQuery.toLowerCase())
 		)
 			return true;

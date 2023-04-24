@@ -14,10 +14,13 @@ function ActionsBar({ dispatch, filterParams }) {
 				dispatch={dispatch}
 			/>
 			<SectionHeading>
-				<h2>Projects</h2>
+				<h2>Someday list</h2>
+				{/* 
 				<ActionButton onClick={() => setShowFilter(true)}>
-					<IoOptionsOutline />
+					 <IoOptionsOutline />
+					
 				</ActionButton>
+				*/}
 			</SectionHeading>
 
 			<FilterBar dispatch={dispatch} filterParams={filterParams} />
