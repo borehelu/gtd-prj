@@ -69,7 +69,7 @@ Backend
 
 ### What I learned
 
-I learnt the importance of using preprocessors to speed up the writing of css styles following the DRY philosophy. SASS allowed to use the typical programming constructs in CSS making the entire process very enjoyable. I enjoyed using mixins to encapsulate reusable styles under a name that I could include everywhere the group of styles were needed.
+I learnt how to use json web tokens for access protection.
 
 
 
